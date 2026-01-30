@@ -1,22 +1,21 @@
 package com.example.aa1autoescuelaandroid.domain;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.time.LocalDate;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-@Entity
 public class Autoescuela {
-    @PrimaryKey(autoGenerate = true)
+
     private long id;
     private String nombre;
     private String direccion;
     private String ciudad;
     private String telefono;
     private String email;
+    private LocalDate fechaApertura;
     private float rating;
     private boolean activa;
 //    private List<CocheOutDto> coches;
@@ -25,13 +24,14 @@ public class Autoescuela {
     private double longitud;
 
 
-    public Autoescuela(long id, String nombre, String direccion, String ciudad, String telefono, String email, float rating, boolean activa, double latitud, double longitud) {
+    public Autoescuela(long id, String nombre, String direccion, String ciudad, String telefono, String email, LocalDate fechaApertura, float rating, boolean activa, double latitud, double longitud) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.ciudad = ciudad;
         this.telefono = telefono;
         this.email = email;
+        this.fechaApertura = fechaApertura;
         this.rating = rating;
         this.activa = activa;
         this.latitud = latitud;
@@ -44,6 +44,14 @@ public class Autoescuela {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public LocalDate getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(LocalDate fechaApertura) {
+        this.fechaApertura = fechaApertura;
     }
 
     public String getNombre() {

@@ -33,7 +33,7 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
     public void onBindViewHolder(@NonNull AutoescuelaAdapter.AutoescuelaHolder holder, int position) {
         holder.itemAutoescuelaName.setText(autoescuelaList.get(position).getNombre());
         holder.itemAutoescuelaCity.setText(autoescuelaList.get(position).getCiudad());
-        holder.itemAutoescuelaRating.setText((int) autoescuelaList.get(position).getRating());
+        holder.itemAutoescuelaRating.setText(String.valueOf(autoescuelaList.get(position).getRating()));
     }
 
     @Override
