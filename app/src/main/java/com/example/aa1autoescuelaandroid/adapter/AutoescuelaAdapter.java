@@ -10,30 +10,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
+import com.example.aa1autoescuelaandroid.view.OnAutoescuelaClickListener;
 
 import java.util.List;
 
 public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.AutoescuelaHolder> {
 
     List<Autoescuela> autoescuelaList;
+    OnAutoescuelaClickListener listener;
 
-    public AutoescuelaAdapter(List<Autoescuela> autoescuelaList) {
+    public AutoescuelaAdapter(List<Autoescuela> autoescuelaList,
+                              OnAutoescuelaClickListener listener) {
         this.autoescuelaList = autoescuelaList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public AutoescuelaAdapter.AutoescuelaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View itemView = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.autoescuela_item, parent , false   );
-       return new AutoescuelaHolder(itemView);
+    public AutoescuelaHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.autoescuela_item, parent , false);
+        return new AutoescuelaHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AutoescuelaAdapter.AutoescuelaHolder holder, int position) {
-        holder.itemAutoescuelaName.setText(autoescuelaList.get(position).getNombre());
-        holder.itemAutoescuelaCity.setText(autoescuelaList.get(position).getCiudad());
-        holder.itemAutoescuelaRating.setText(String.valueOf(autoescuelaList.get(position).getRating()));
+    public void onBindViewHolder(@NonNull AutoescuelaHolder holder, int position) {
+
+        Autoescuela autoescuela = autoescuelaList.get(position);
+
+        holder.itemAutoescuelaName.setText(autoescuela.getNombre());
+        holder.itemAutoescuelaCity.setText(autoescuela.getCiudad());
+        holder.itemAutoescuelaRating.setText(String.valueOf(autoescuela.getRating()));
+
+        // Manejar el click aquí, pasando el objeto entero
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onAutoescuelaClick(autoescuela);
+            }
+        });
     }
 
     @Override
@@ -52,10 +66,6 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
             itemAutoescuelaName = itemView.findViewById(R.id.itemAutoescuelaName);
             itemAutoescuelaCity = itemView.findViewById(R.id.itemAutoescuelaCity);
             itemAutoescuelaRating = itemView.findViewById(R.id.itemAutoescuelaRating);
-
-
         }
-
-
     }
 }

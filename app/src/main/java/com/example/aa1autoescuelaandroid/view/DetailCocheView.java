@@ -1,13 +1,8 @@
 package com.example.aa1autoescuelaandroid.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,37 +10,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.aa1autoescuelaandroid.R;
 
-public class RegisterCocheView extends AppCompatActivity {
+public class DetailCocheView extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register_coche);
+        setContentView(R.layout.activity_detail_coche);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-    }
-
-    public void registerCoche(View view) {
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.returnbutton, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.back_button){
-            Intent intent = new Intent(this, CocheListView.class);
-            startActivity(intent);
-            return  true;
-        }
-        return false;
     }
 }

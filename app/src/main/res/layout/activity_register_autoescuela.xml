@@ -10,10 +10,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/register_autoescuela"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -58,6 +59,14 @@
             android:hint="email" />
 
         <EditText
+            android:id="@+id/autoescuela_capacidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="capacidad"
+            android:inputType="number" />
+
+        <EditText
             android:id="@+id/autoescuela_fecha_apertura"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,14 +92,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="latitud"
             android:inputType="numberSigned" />
+
+        <EditText
+            android:id="@+id/autoescuela_longitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="longitud"
+            android:inputType="text" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/register_autoescuela"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:onClick="registerAutoescuela"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

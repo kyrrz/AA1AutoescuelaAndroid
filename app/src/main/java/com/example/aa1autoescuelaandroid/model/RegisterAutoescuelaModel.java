@@ -14,7 +14,7 @@ public class RegisterAutoescuelaModel  implements RegisterAutoescuelaContract.Mo
     public void registerAutoescuela(Autoescuela autoescuela, onRegisterListener listener) {
         AutoescuelaApiInterface api = AutoescuelaApi.buildInstance();
         Call<Autoescuela> postAutoescuelaCall = api.registerAutoescuela(autoescuela);
-        postAutoescuelaCall.enqueue(new Callback<Autoescuela>() {
+        postAutoescuelaCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Autoescuela> call, Response<Autoescuela> response) {
                 if(response.code() == 201) {

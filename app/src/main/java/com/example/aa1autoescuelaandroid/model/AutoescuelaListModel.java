@@ -17,7 +17,7 @@ public class AutoescuelaListModel implements AutoescuelaListContract.Model {
         AutoescuelaApiInterface autoescuelaApi = AutoescuelaApi.buildInstance();
         Call<List<Autoescuela>> getAutoescuelasCall = autoescuelaApi.getAutoescuelas();
 
-        getAutoescuelasCall.enqueue(new Callback<List<Autoescuela>>() {
+        getAutoescuelasCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Autoescuela>> call, Response<List<Autoescuela>> response) {
                 if(response.code() == 200) {
