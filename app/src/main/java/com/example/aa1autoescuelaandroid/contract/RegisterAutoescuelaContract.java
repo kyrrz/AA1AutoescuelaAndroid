@@ -2,6 +2,8 @@ package com.example.aa1autoescuelaandroid.contract;
 
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 
+import java.time.LocalDate;
+
 public interface RegisterAutoescuelaContract {
 
     interface Model{
@@ -21,8 +23,8 @@ public interface RegisterAutoescuelaContract {
     }
 
     interface Presenter{
-        void registerAutoescuela(String nombre,String direccion,String ciudad, String telefono ,
-                                 String email, float rating, boolean activa, double latitud, double longitud);
+        void registerAutoescuela(String nombre, String direccion, String ciudad, String telefono ,
+                                 String email,int capacidad, LocalDate fechaApertura, float rating, boolean activa, double latitud, double longitud);
 
     }
 }

@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_register_autoescuela"
-        android:icon="@android:drawable/ic_menu_add"
+        android:id="@+id/back_button"
+        android:enabled="true"
+        android:icon="@android:drawable/btn_dialog"
+        android:title="Back"
+        android:visible="true"
         app:showAsAction="always" />
 </menu>

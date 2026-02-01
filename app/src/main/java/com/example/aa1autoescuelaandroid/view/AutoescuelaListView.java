@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
     List<Autoescuela> autoescuelaList;
     private AutoescuelaAdapter autoescuelaAdapter;
     private AutoescuelaListPresenter presenter;
+    private OnAutoescuelaClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,8 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
         autoescuelasList.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         autoescuelasList.setLayoutManager(linearLayoutManager);
-        autoescuelaAdapter = new AutoescuelaAdapter(autoescuelaList);
+        listener = autoescuela -> onAutoescuelaClick(autoescuela);
+        autoescuelaAdapter = new AutoescuelaAdapter(autoescuelaList,listener);
         autoescuelasList.setAdapter(autoescuelaAdapter);
     }
 
@@ -66,6 +69,13 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
 
     }
 
+    public void onAutoescuelaClick(Autoescuela autoescuela){
+        Intent intent = new Intent(this, DetailAutoescuelaView.class);
+        intent.putExtra(DetailAutoescuelaView.EXTRA_ID, autoescuela.getId());
+        startActivity(intent);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
@@ -74,8 +84,8 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.register_coche){
-            Intent intent = new Intent(this, RegisterCocheView.class);
+        if (item.getItemId() == R.id.action_register_autoescuela){
+            Intent intent = new Intent(this, RegisterAutoescuelaView.class);
             startActivity(intent);
             return  true;
         }
