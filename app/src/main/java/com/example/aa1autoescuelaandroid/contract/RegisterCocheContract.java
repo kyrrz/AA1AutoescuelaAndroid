@@ -4,6 +4,7 @@ import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface RegisterCocheContract {
     interface Model{
@@ -12,19 +13,26 @@ public interface RegisterCocheContract {
             void onRegisterError(String message);
 
         }
+        interface OnAutoescuelasListener {
+            void onSuccess(List<Autoescuela> autoescuelas);
+            void onError(String message);
+        }
         void registerCoche(Coche coche, RegisterCocheContract.Model.onRegisterListener listener);
+        void loadAutoescuelas(OnAutoescuelasListener listener);
     }
 
     interface View {
         void showMessage(String message);
         void showError(String message);
         void showValidationError(String message);
+        void showAutoescuelas(List<Autoescuela> autoescuelas);
 
     }
 
     interface Presenter{
+        void loadAutoescuelas();
         void registerCoche(String matricula, String marca, String modelo, String tipoCambio,
-                           int kilometraje, LocalDate fechaCompra, float precioCompra, boolean disponible, Autoescuela autoescuela);
+                           int kilometraje, LocalDate fechaCompra, float precioCompra, boolean disponible, long autoescuelaId);
 
     }
 }

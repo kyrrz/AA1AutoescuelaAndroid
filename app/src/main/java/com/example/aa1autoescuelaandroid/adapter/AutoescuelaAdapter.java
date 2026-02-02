@@ -3,6 +3,7 @@ package com.example.aa1autoescuelaandroid.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,10 +43,15 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
         holder.itemAutoescuelaCity.setText(autoescuela.getCiudad());
         holder.itemAutoescuelaRating.setText(String.valueOf(autoescuela.getRating()));
 
-        // Manejar el click aquí, pasando el objeto entero
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onAutoescuelaClick(autoescuela);
+            }
+        });
+        holder.deleteButton.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDeleteClick(autoescuela);
             }
         });
     }
@@ -59,6 +65,7 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
         private TextView itemAutoescuelaName;
         private TextView itemAutoescuelaCity;
         private TextView itemAutoescuelaRating;
+        private ImageButton deleteButton;
 
         public AutoescuelaHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +73,7 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
             itemAutoescuelaName = itemView.findViewById(R.id.itemAutoescuelaName);
             itemAutoescuelaCity = itemView.findViewById(R.id.itemAutoescuelaCity);
             itemAutoescuelaRating = itemView.findViewById(R.id.itemAutoescuelaRating);
+            deleteButton = itemView.findViewById(R.id.action_delete_autoescuela);
         }
     }
 }

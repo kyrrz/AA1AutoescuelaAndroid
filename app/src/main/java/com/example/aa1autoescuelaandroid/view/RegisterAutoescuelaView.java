@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,12 @@ import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.contract.RegisterAutoescuelaContract;
 import com.example.aa1autoescuelaandroid.presenter.RegisterAutoescuelaPresenter;
 import com.example.aa1autoescuelaandroid.util.DateUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.time.LocalDate;
@@ -27,12 +34,42 @@ import java.time.LocalDate;
 public class RegisterAutoescuelaView extends AppCompatActivity implements RegisterAutoescuelaContract.View {
 
     private RegisterAutoescuelaContract.Presenter presenter;
+    private MapView mapView;
+    private GoogleMap googleMap;
+    private Marker marker;
+    private Double latitud = null;
+    private Double longitud = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_autoescuela);
         presenter = new RegisterAutoescuelaPresenter(this);
+        mapView = findViewById(R.id.register_autoescuela_map_view);
+
+        Bundle mapViewBundle = savedInstanceState != null
+                ? savedInstanceState.getBundle("MapViewBundleKey")
+                : null;
+
+        mapView.onCreate(mapViewBundle);
+        mapView.getMapAsync(map -> {
+            googleMap = map;
+
+            LatLng defaultLocation = new LatLng(40.4168, -3.7038);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 12f));
+            googleMap.getUiSettings().setZoomControlsEnabled(true);
+            googleMap.setOnMapClickListener(latLng -> {
+                if (marker != null) marker.remove();
+
+                marker = googleMap.addMarker(
+                        new MarkerOptions().position(latLng).title("Ubicación seleccionada")
+                );
+
+                latitud = latLng.latitude;
+                longitud = latLng.longitude;
+
+            });
+        });
 
     }
 
@@ -47,12 +84,25 @@ public class RegisterAutoescuelaView extends AppCompatActivity implements Regist
         float rating = Float.parseFloat(((EditText) findViewById(R.id.autoescuela_rating)).getText().toString());
         CheckBox checkBox = findViewById(R.id.autoescuela_activa);
         boolean activa = checkBox.isChecked();
-        double latitud = Double.parseDouble(((EditText) findViewById(R.id.autoescuela_latitud)).getText().toString());
-        double longitud = Double.parseDouble(((EditText) findViewById(R.id.autoescuela_longitud)).getText().toString());
+
 
         presenter.registerAutoescuela(nombre, direccion, ciudad, telefono, email, capacidad, fechaApertura, rating, activa, latitud, longitud);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
 
+    @Override
+    protected void onStop() {
+        mapView.onStop();
+        super.onStop();
+    }
+    @Override protected void onResume() { super.onResume(); mapView.onResume(); }
+    @Override protected void onPause() { mapView.onPause(); super.onPause(); }
+    @Override protected void onDestroy() { mapView.onDestroy(); super.onDestroy(); }
+    @Override public void onLowMemory() { super.onLowMemory(); mapView.onLowMemory(); }
 
     @Override
     public void showMessage(String message) {

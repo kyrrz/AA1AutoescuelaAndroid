@@ -4,4 +4,5 @@ import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 
 public interface OnAutoescuelaClickListener {
     void onAutoescuelaClick(Autoescuela autoescuela);
+    void onDeleteClick(Autoescuela autoescuela);
 }

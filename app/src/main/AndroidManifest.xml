@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AA1AutoescuelaAndroid"
         android:usesCleartextTraffic="true" >
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="aaaaaaaaaaaa"/>
         <activity
             android:name=".view.DetailCocheView"
             android:exported="false" />

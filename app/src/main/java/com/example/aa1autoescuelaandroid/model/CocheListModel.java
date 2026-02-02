@@ -1,4 +1,59 @@
 package com.example.aa1autoescuelaandroid.model;
 
-public class CocheListModel{
+import com.example.aa1autoescuelaandroid.api.AutoescuelaApi;
+import com.example.aa1autoescuelaandroid.api.AutoescuelaApiInterface;
+import com.example.aa1autoescuelaandroid.contract.CocheListContract;
+import com.example.aa1autoescuelaandroid.domain.Autoescuela;
+import com.example.aa1autoescuelaandroid.domain.Coche;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CocheListModel implements CocheListContract.Model {
+    @Override
+    public void loadCoches(OnLoadListener listener) {
+        AutoescuelaApiInterface autoescuelaApi = AutoescuelaApi.buildInstance();
+        Call<List<Coche>> getCochesCall = autoescuelaApi.getCoches();
+
+        getCochesCall.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<List<Coche>> call, Response<List<Coche>> response) {
+                if(response.code() == 200) {
+                    List<Coche> coches = response.body();
+                    listener.onLoadSuccess(coches);
+                } else if(response.code() == 500) {
+                    listener.onLoadError("Error interno del servidor");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Coche>> call, Throwable t) {
+                listener.onLoadError("No se ha podido conectar con el servidor");
+            }
+        });
+    }
+
+    @Override
+    public void deleteCoche(long id, OnDeleteListener listener) {
+        AutoescuelaApiInterface autoescuelaApi = AutoescuelaApi.buildInstance();
+        Call<Coche> deleteCocheCall = autoescuelaApi.deleteCoche(id);
+        deleteCocheCall.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<Coche> call, Response<Coche> response) {
+                if (response.code() == 204){
+                    listener.onDeleteSuccess("Autoescuela borrada");
+                } else {
+                    listener.onDeleteError("No se pudo borrar ");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Coche> call, Throwable t) {
+                listener.onDeleteError("No se ha podido conectar con el servidor");
+            }
+        });
+    }
 }

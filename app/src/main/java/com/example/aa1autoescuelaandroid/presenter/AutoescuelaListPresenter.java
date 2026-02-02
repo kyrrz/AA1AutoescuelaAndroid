@@ -6,7 +6,7 @@ import com.example.aa1autoescuelaandroid.model.AutoescuelaListModel;
 
 import java.util.List;
 
-public class AutoescuelaListPresenter implements AutoescuelaListContract.Presenter, AutoescuelaListContract.Model.OnLoadListener {
+public class AutoescuelaListPresenter implements AutoescuelaListContract.Presenter, AutoescuelaListContract.Model.OnLoadListener, AutoescuelaListContract.Model.OnDeleteListener {
 
     private AutoescuelaListContract.Model model;
     private AutoescuelaListContract.View view;
@@ -20,6 +20,22 @@ public class AutoescuelaListPresenter implements AutoescuelaListContract.Present
     }
 
     @Override
+    public void deleteAutoescuela(long id) {
+        model.deleteAutoescuela(id,this);
+    }
+
+    @Override
+    public void onDeleteSuccess(String message) {
+        view.showMessage(message);
+        loadAutoescuelas();
+    }
+
+    @Override
+    public void onDeleteError(String message) {
+        view.showError(message);
+    }
+
+    @Override
     public void onLoadSuccess(List<Autoescuela> autoescuelas) {
         view.show(autoescuelas);
         view.showMessage("Cargado con éxito");
@@ -29,4 +45,6 @@ public class AutoescuelaListPresenter implements AutoescuelaListContract.Present
     public void onLoadError(String message) {
         view.showError(message);
     }
+
+
 }

@@ -3,7 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_register_autoescuela"
+        android:id="@+id/action_register_coche"
         android:icon="@android:drawable/ic_menu_add"
+        android:title="action_register_coche"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/back_button"
+        android:icon="@android:drawable/btn_dialog"
         app:showAsAction="always" />
 </menu>
