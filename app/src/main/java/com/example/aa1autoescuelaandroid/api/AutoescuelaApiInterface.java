@@ -30,7 +30,8 @@ public interface AutoescuelaApiInterface {
     @DELETE("autoescuelas/{id}")
     Call<Autoescuela> deleteAutoescuela(@Path("id") long id);
 
-
+    @GET("autoescuelas/{id}/coches")
+    Call<List<Coche>> getCochesByAutoescuela(@Path("id") long id);
     @GET("coches")
     Call<List<Coche>> getCoches();
 

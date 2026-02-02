@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
     implementation("androidx.room:room-runtime:2.8.2")
+    implementation(libs.play.services.maps)
     annotationProcessor("androidx.room:room-compiler:2.8.2")
     compileOnly("org.projectlombok:lombok:1.18.42")
     annotationProcessor("org.projectlombok:lombok:1.18.42")

@@ -1,12 +1,11 @@
 package com.example.aa1autoescuelaandroid.view;
 
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +18,17 @@ import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.model.DetailAutoescuelaModel;
 import com.example.aa1autoescuelaandroid.presenter.DetailAutoescuelaPresenter;
 import com.example.aa1autoescuelaandroid.util.DateUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.time.LocalDate;
 
 public class DetailAutoescuelaView extends AppCompatActivity
-        implements DetailAutoescuelaContract.View {
+        implements DetailAutoescuelaContract.View, OnMapReadyCallback {
 
     private TextView nombre;
     private TextView direccion;
@@ -34,9 +39,15 @@ public class DetailAutoescuelaView extends AppCompatActivity
     private TextView fechaApertura;
     private TextView rating;
     private CheckBox activa;
-    private TextView latitud;
-    private TextView longitud;
+    private double latitud;
+    private double longitud;
     public static final String EXTRA_ID = "AUTOESCUELA_ID";
+
+    private MapView mapView;
+    private Autoescuela autoescuela;
+
+    private GoogleMap googleMap;
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
 
     private DetailAutoescuelaPresenter presenter;
 
@@ -44,17 +55,30 @@ public class DetailAutoescuelaView extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_autoescuela);
-        nombre = findViewById(R.id.autoescuela_detail_nombre);
-        direccion = findViewById(R.id.autoescuela_detail_direccion);
-        ciudad = findViewById(R.id.autoescuela_detail_ciudad);
-        telefono = findViewById(R.id.autoescuela_detail_telefono);
+        mapView = findViewById(R.id.autoescuela_detail_map_view);
+        nombre = findViewById(R.id.coche_detail_matricula);
+        direccion = findViewById(R.id.coche_detail_marca);
+        ciudad = findViewById(R.id.coche_detail_modelo);
+        telefono = findViewById(R.id.coche_detail_tipo_cambio);
         email = findViewById(R.id.autoescuela_detail_email);
         capacidad = findViewById(R.id.autoescuela_detail_capacidad);
         fechaApertura = findViewById(R.id.autoescuela_detail_fecha_apertura);
         rating = findViewById(R.id.autoescuela_detail_rating);
         activa = findViewById(R.id.autoescuela_detail_activa);
-
-
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
+        mapView.onCreate(mapViewBundle);
+        mapView.getMapAsync(this);
+        findViewById(R.id.action_view_coches_list).setOnClickListener(v -> {
+            Intent intent = new Intent(this, CochesAutoescuelaView.class);
+            intent.putExtra(
+                    CochesAutoescuelaView.EXTRA_AUTOESCUELA_ID,
+                    getIntent().getLongExtra(EXTRA_ID, -1)
+            );
+            startActivity(intent);
+        });
 
 
         long id = getIntent().getLongExtra(EXTRA_ID, -1);
@@ -66,11 +90,12 @@ public class DetailAutoescuelaView extends AppCompatActivity
         DetailAutoescuelaContract.Model model = new DetailAutoescuelaModel();
         presenter = new DetailAutoescuelaPresenter(this, model);
         presenter.loadAutoescuela(id);
+
     }
 
     @Override
     public void showAutoescuela(Autoescuela a) {
-
+        this.autoescuela = a;
         nombre.setText(a.getNombre());
         direccion.setText(a.getDireccion());
         ciudad.setText(a.getCiudad());
@@ -87,13 +112,36 @@ public class DetailAutoescuelaView extends AppCompatActivity
         activa.setChecked(a.isActiva());
 
 
-        Intent intent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("geo:" + a.getLatitud() + "," + a.getLongitud())
-        );
-        startActivity(intent);
+//        Intent intent = new Intent(
+//                Intent.ACTION_VIEW,
+//                Uri.parse("geo:" + a.getLatitud() + "," + a.getLongitud())
+//        );
+//        startActivity(intent);
+
+        if (googleMap != null) {
+            updateMap();
+        }
     }
-    
+    private void updateMap() {
+        if (autoescuela == null) return;
+
+        LatLng position = new LatLng(
+                autoescuela.getLatitud(),
+                autoescuela.getLongitud()
+        );
+
+        googleMap.clear();
+
+        googleMap.addMarker(
+                new MarkerOptions()
+                        .position(position)
+                        .title(autoescuela.getNombre())
+        );
+
+        googleMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(position, 16f)
+        );
+    }
 
     @Override
     public void showError(String message) {
@@ -123,6 +171,75 @@ public class DetailAutoescuelaView extends AppCompatActivity
             startActivity(intent);
             return  true;
         }
+        if (item.getItemId() == R.id.action_delete_autoescuela) {
+            confirmarBorrado();
+            return true;
+        }
         return false;
+    }
+
+    private void confirmarBorrado(){
+        new AlertDialog.Builder(this).setTitle("Eliminar Autoescuela")
+                .setMessage("¿Seguro que quieres eliminar esta autoescuela?")
+                .setPositiveButton("Eliminar", (dialog, which) -> presenter.deleteAutoescuela(autoescuela.getId()))
+                .setNegativeButton("Cancelar",null)
+                .show();
+    }
+    @Override
+    public void onAutoescuelaDeleted(){
+        finish();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setMapToolbarEnabled(true);
+
+        if (autoescuela != null) {
+            updateMap();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+    @Override
+    protected void onPause() {
+        mapView.onPause();
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+        mapView.onStop();
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+        mapView.onSaveInstanceState(mapViewBundle);
     }
 }

@@ -87,21 +87,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/autoescuela_latitud"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/register_autoescuela_map_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="latitud"
-            android:inputType="numberSigned" />
-
-        <EditText
-            android:id="@+id/autoescuela_longitud"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="longitud"
-            android:inputType="text" />
+            android:layout_height="200dp" />
 
     </LinearLayout>
 
@@ -109,7 +98,7 @@
         android:id="@+id/register_autoescuela"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:onClick="registerAutoescuela"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -11,7 +11,13 @@ public interface AutoescuelaListContract {
             void onLoadSuccess(List<Autoescuela> autoescuelas);
             void onLoadError(String message);
         }
+        interface OnDeleteListener{
+            void onDeleteSuccess(String message);
+            void onDeleteError(String message);
+        }
         void loadAutoescuelas(OnLoadListener listener);
+        void deleteAutoescuela(long id, OnDeleteListener listener);
+
     }
 
     interface View{
@@ -19,10 +25,14 @@ public interface AutoescuelaListContract {
         void showError(String message);
         void showMessage(String message);
 
+        void onAutoescuelaItemClick(Autoescuela autoescuela);
+
+        void onDeleteClick(Autoescuela autoescuela);
     }
 
     interface Presenter{
         void loadAutoescuelas();
+        void deleteAutoescuela(long id);
 
     }
 }

@@ -35,5 +35,26 @@ public class AutoescuelaListModel implements AutoescuelaListContract.Model {
             }
         });
     }
+
+    @Override
+    public void deleteAutoescuela(long id, OnDeleteListener listener) {
+        AutoescuelaApiInterface autoescuelaApi = AutoescuelaApi.buildInstance();
+        Call<Autoescuela> deleteAutoescuelasCall = autoescuelaApi.deleteAutoescuela(id);
+        deleteAutoescuelasCall.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<Autoescuela> call, Response<Autoescuela> response) {
+                if (response.code() == 204){
+                    listener.onDeleteSuccess("Autoescuela borrada");
+                } else {
+                    listener.onDeleteError("No se pudo borrar ");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Autoescuela> call, Throwable t) {
+                listener.onDeleteError("No se ha podido conectar con el servidor");
+            }
+        });
+    }
 }
 
