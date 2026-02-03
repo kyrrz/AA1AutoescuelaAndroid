@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.view.OnAutoescuelaClickListener;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class AutoescuelaAdapter extends RecyclerView.Adapter<AutoescuelaAdapter.
         private TextView itemAutoescuelaName;
         private TextView itemAutoescuelaCity;
         private TextView itemAutoescuelaRating;
-        private ImageButton deleteButton;
+        private MaterialButton deleteButton;
 
         public AutoescuelaHolder(@NonNull View itemView) {
             super(itemView);

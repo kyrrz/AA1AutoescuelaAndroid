@@ -4,31 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.adapter.CocheAdapter;
 import com.example.aa1autoescuelaandroid.contract.CocheListContract;
-import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
 import com.example.aa1autoescuelaandroid.presenter.CocheListPresenter;
-import com.example.aa1autoescuelaandroid.presenter.CochesAutoescuelaPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CocheListView extends AppCompatActivity implements CocheListContract.View {
     List<Coche> cocheList;
+    private ImageView cocheImage;
     private CocheAdapter cocheAdapter;
     private CocheListPresenter presenter;
     private OnCocheClickListener listener;
@@ -38,7 +34,6 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
         setContentView(R.layout.activity_coche_list);
         presenter = new CocheListPresenter(this);
         cocheList = new ArrayList<>();
-
 
         RecyclerView cochesListView = findViewById(R.id.coche_list);
         cochesListView.setHasFixedSize(true);
@@ -52,7 +47,7 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
 
             @Override
             public void onDeleteClick(Coche coche) {
-
+                CocheListView.this.onDeleteClick(coche);
             }
         };
         cocheAdapter = new CocheAdapter(cocheList ,listener);
@@ -84,7 +79,7 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
 
     public void onCocheItemClick(Coche coche) {
         Intent intent = new Intent(this, DetailCocheView.class);
-        //intent.putExtra(DetailCocheView.EXTRA_ID, coche.getId());
+        intent.putExtra(DetailCocheView.EXTRA_ID, coche.getId());
         startActivity(intent);
     }
 
@@ -97,7 +92,7 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
     private void confirmarBorrado(Coche coche) {
         new AlertDialog.Builder(this)
                 .setTitle("Eliminar coche")
-                .setMessage("¿Seguro que deseas eliminar " + coche.getModelo() + coche.getMarca() + "?")
+                .setMessage("¿Seguro que deseas eliminar " + coche.getMarca() + " " + coche.getModelo() +  "?")
                 .setPositiveButton("Eliminar", (d, w) ->
                         presenter.deleteCoche(coche.getId())
                 )
