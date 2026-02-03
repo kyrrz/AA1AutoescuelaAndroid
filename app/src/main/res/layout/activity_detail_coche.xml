@@ -40,30 +40,30 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/autoescuela_detail_email"
+            android:id="@+id/coche_detail_kilometraje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/autoescuela_detail_capacidad"
+            android:id="@+id/coche_detail_fecha_compra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/autoescuela_detail_fecha_apertura"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/autoescuela_detail_rating"
+            android:id="@+id/coche_detail_precio_compra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <CheckBox
-            android:id="@+id/autoescuela_detail_activa"
+            android:id="@+id/coche_detail_disponible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false" />
+
+        <TextView
+            android:id="@+id/coche_detail_autoescuela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

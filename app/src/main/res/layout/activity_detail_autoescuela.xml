@@ -32,22 +32,22 @@
         app:layout_constraintTop_toBottomOf="@+id/autoescuela_detail_map_view">
 
         <TextView
-            android:id="@+id/coche_detail_matricula"
+            android:id="@+id/autoescuela_detail_nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/coche_detail_marca"
+            android:id="@+id/autoescuela_detail_direccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/coche_detail_modelo"
+            android:id="@+id/autoescuela_detail_ciudad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/coche_detail_tipo_cambio"
+            android:id="@+id/autoescuela_detail_telefono"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -13,7 +13,7 @@ public class DetailAutoescuelaPresenter implements DetailAutoescuelaContract.Pre
     private DetailAutoescuelaContract.View view;
     private DetailAutoescuelaContract.Model model;
 
-    public  DetailAutoescuelaPresenter(DetailAutoescuelaContract.View view, DetailAutoescuelaContract.Model model){
+    public  DetailAutoescuelaPresenter(DetailAutoescuelaContract.View view){
         this.view = view;
         this.model = new DetailAutoescuelaModel();
     }

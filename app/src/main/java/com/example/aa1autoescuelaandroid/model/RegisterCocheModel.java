@@ -1,8 +1,15 @@
 package com.example.aa1autoescuelaandroid.model;
 
+import static com.example.aa1autoescuelaandroid.util.CocheMapper.toEntity;
+
+import android.content.Context;
+import android.view.contentcapture.ContentCaptureCondition;
+
 import com.example.aa1autoescuelaandroid.api.AutoescuelaApi;
 import com.example.aa1autoescuelaandroid.api.AutoescuelaApiInterface;
 import com.example.aa1autoescuelaandroid.contract.RegisterCocheContract;
+import com.example.aa1autoescuelaandroid.db.AppDatabase;
+import com.example.aa1autoescuelaandroid.db.DatabaseUtil;
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
 
@@ -13,15 +20,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterCocheModel implements RegisterCocheContract.Model {
+    private AppDatabase db;
+    public RegisterCocheModel(Context context){
+        db= DatabaseUtil.getDb(context);
+    }
     @Override
     public void registerCoche(Coche coche, onRegisterListener listener) {
         AutoescuelaApiInterface api = AutoescuelaApi.buildInstance();
         Call<Coche> postCocheCall = api.registerCoche(coche);
-        postCocheCall.enqueue(new Callback<Coche>() {
+        postCocheCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Coche> call, Response<Coche> response) {
                 if(response.code() == 201) {
                     listener.onRegisterSuccess(response.body());
+                    new Thread(() -> {
+                        db.cocheDao().insert(toEntity(response.body()));
+                    }).start();
                 } else if (response.code() == 400) {
                     listener.onRegisterError("Errores de validacion");
 

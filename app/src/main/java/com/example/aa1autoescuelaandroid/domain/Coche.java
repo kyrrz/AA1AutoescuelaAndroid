@@ -20,9 +20,11 @@ public class Coche {
     private LocalDate fechaCompra;
     private float precioCompra;
     private boolean disponible;
-    private long autoescuelaId;
+    private Long autoescuelaId;
+    private Autoescuela autoescuela;
+    private String image;
 
-    public Coche(long id, String matricula, String marca, String modelo, String tipoCambio, int kilometraje, LocalDate fechaCompra, float precioCompra, boolean disponible, long autoescuelaId) {
+    public Coche(long id, String matricula, String marca, String modelo, String tipoCambio, int kilometraje, LocalDate fechaCompra, float precioCompra, boolean disponible, Long autoescuelaId, Autoescuela autoescuela, String image) {
         this.id = id;
         this.matricula = matricula;
         this.marca = marca;
@@ -33,5 +35,7 @@ public class Coche {
         this.precioCompra = precioCompra;
         this.disponible = disponible;
         this.autoescuelaId = autoescuelaId;
+        this.autoescuela = autoescuela;
+        this.image = image;
     }}
 

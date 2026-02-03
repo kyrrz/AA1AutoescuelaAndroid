@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.contract.DetailAutoescuelaContract;
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
-import com.example.aa1autoescuelaandroid.model.DetailAutoescuelaModel;
 import com.example.aa1autoescuelaandroid.presenter.DetailAutoescuelaPresenter;
 import com.example.aa1autoescuelaandroid.util.DateUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,25 +29,15 @@ import java.time.LocalDate;
 public class DetailAutoescuelaView extends AppCompatActivity
         implements DetailAutoescuelaContract.View, OnMapReadyCallback {
 
-    private TextView nombre;
-    private TextView direccion;
-    private TextView ciudad;
-    private TextView telefono;
-    private TextView email;
-    private TextView capacidad;
-    private TextView fechaApertura;
-    private TextView rating;
+    private TextView nombre, direccion, ciudad, telefono, email, capacidad, fechaApertura, rating;
     private CheckBox activa;
-    private double latitud;
-    private double longitud;
+
     public static final String EXTRA_ID = "AUTOESCUELA_ID";
 
     private MapView mapView;
     private Autoescuela autoescuela;
-
     private GoogleMap googleMap;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
-
     private DetailAutoescuelaPresenter presenter;
 
     @Override
@@ -56,10 +45,10 @@ public class DetailAutoescuelaView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_autoescuela);
         mapView = findViewById(R.id.autoescuela_detail_map_view);
-        nombre = findViewById(R.id.coche_detail_matricula);
-        direccion = findViewById(R.id.coche_detail_marca);
-        ciudad = findViewById(R.id.coche_detail_modelo);
-        telefono = findViewById(R.id.coche_detail_tipo_cambio);
+        nombre = findViewById(R.id.autoescuela_detail_nombre);
+        direccion = findViewById(R.id.autoescuela_detail_direccion);
+        ciudad = findViewById(R.id.autoescuela_detail_ciudad);
+        telefono = findViewById(R.id.autoescuela_detail_telefono);
         email = findViewById(R.id.autoescuela_detail_email);
         capacidad = findViewById(R.id.autoescuela_detail_capacidad);
         fechaApertura = findViewById(R.id.autoescuela_detail_fecha_apertura);
@@ -87,8 +76,7 @@ public class DetailAutoescuelaView extends AppCompatActivity
             return;
         }
 
-        DetailAutoescuelaContract.Model model = new DetailAutoescuelaModel();
-        presenter = new DetailAutoescuelaPresenter(this, model);
+        presenter = new DetailAutoescuelaPresenter(this);
         presenter.loadAutoescuela(id);
 
     }

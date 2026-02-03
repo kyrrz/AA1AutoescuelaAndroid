@@ -73,7 +73,11 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
         autoescuelasList.setAdapter(autoescuelaAdapter);
     }
 
-
+    @Override protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+        presenter.loadAutoescuelas();
+    }
 
     @Override
     public void show(List<Autoescuela> autoescuelas) {
@@ -181,7 +185,7 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
         });
     }
     @Override protected void onStart() { super.onStart(); mapView.onStart(); }
-    @Override protected void onResume() { super.onResume(); mapView.onResume(); presenter.loadAutoescuelas(); }
+
     @Override protected void onPause() { mapView.onPause(); super.onPause(); }
     @Override protected void onStop() { mapView.onStop(); super.onStop(); }
     @Override protected void onDestroy() { mapView.onDestroy(); super.onDestroy(); }

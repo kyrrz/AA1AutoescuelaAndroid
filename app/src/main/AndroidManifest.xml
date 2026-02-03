@@ -18,7 +18,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="aaaaaaaaaaaa"/>
+            android:value="xxxxxxxxxx"/>
         <activity
             android:name=".view.DetailCocheView"
             android:exported="false" />
@@ -36,6 +36,9 @@
             android:exported="false" />
         <activity
             android:name=".view.RegisterAutoescuelaView"
+            android:exported="false" />
+        <activity
+            android:name=".view.CochesAutoescuelaView"
             android:exported="false" />
         <activity
             android:name=".view.AutoescuelaListView"

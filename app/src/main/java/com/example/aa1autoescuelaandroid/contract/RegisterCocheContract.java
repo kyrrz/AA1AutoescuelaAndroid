@@ -1,5 +1,8 @@
 package com.example.aa1autoescuelaandroid.contract;
 
+import android.content.Context;
+import android.net.Uri;
+
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
 
@@ -26,10 +29,16 @@ public interface RegisterCocheContract {
         void showError(String message);
         void showValidationError(String message);
         void showAutoescuelas(List<Autoescuela> autoescuelas);
+        void showImagePreview(Uri uri);
+        void finishView();
+        Context getContext();
+
 
     }
 
     interface Presenter{
+        void onSelectImageClicked();
+        void onImageSelected(Uri uri);
         void loadAutoescuelas();
         void registerCoche(String matricula, String marca, String modelo, String tipoCambio,
                            int kilometraje, LocalDate fechaCompra, float precioCompra, boolean disponible, long autoescuelaId);

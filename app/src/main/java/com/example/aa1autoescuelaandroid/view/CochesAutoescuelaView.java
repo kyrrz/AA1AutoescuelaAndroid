@@ -2,8 +2,11 @@ package com.example.aa1autoescuelaandroid.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,12 +41,18 @@ public class CochesAutoescuelaView extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_coche_list);
+
+        long autoescuelaId = getIntent().getLongExtra(EXTRA_AUTOESCUELA_ID, -1);
+        if (autoescuelaId == -1) {
+            finish();
+            return;
+        }
         presenter = new CochesAutoescuelaPresenter(this);
+        presenter.loadCoches(autoescuelaId);
         cochesList = new ArrayList<>();
 
-
-        RecyclerView cochesListView = findViewById(R.id.autoescuelasList);
+        RecyclerView cochesListView = findViewById(R.id.coche_list);
         cochesListView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         cochesListView.setLayoutManager(linearLayoutManager);
@@ -61,11 +70,17 @@ public class CochesAutoescuelaView extends AppCompatActivity
         cocheAdapter = new CocheAdapter(cochesList ,listener);
         cochesListView.setAdapter(cocheAdapter);
     }
+    @Override protected void onResume() {
+        super.onResume();
+        cocheAdapter.notifyDataSetChanged();
+    }
 
 
     @Override
     public void showCoches(List<Coche> coches) {
-
+        cochesList.clear();
+        cochesList.addAll(coches);
+        cocheAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -81,6 +96,21 @@ public class CochesAutoescuelaView extends AppCompatActivity
         Intent intent = new Intent(this, DetailCocheView.class);
         intent.putExtra(DetailAutoescuelaView.EXTRA_ID, coche.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.returnbutton, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.back_button){
+            finish();
+            return  true;
+        }
+        return false;
     }
 
 
