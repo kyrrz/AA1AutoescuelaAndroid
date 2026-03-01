@@ -151,6 +151,7 @@ public class DetailAutoescuelaView extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_edit_autoescuela){
             Intent intent = new Intent(this, ModifyAutoescuelaView.class);
+            intent.putExtra("AUTOESCUELA_ID", autoescuela.getId());
             startActivity(intent);
             return  true;
         }
