@@ -66,7 +66,7 @@
                             android:alpha="0.8" />
 
                         <TextView
-                            android:id="@+id/tvTotalCoches"
+                            android:id="@+id/coche_list_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -98,7 +98,7 @@
                             android:alpha="0.8" />
 
                         <TextView
-                            android:id="@+id/tvDisponibles"
+                            android:id="@+id/coche_list_disponibles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -145,7 +145,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddCoche"
+        android:id="@+id/fab_action_register_coche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

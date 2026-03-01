@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
         presenter = new AutoescuelaListPresenter(this);
         autoescuelaList = new ArrayList<>();
 
+        FloatingActionButton fab = findViewById(R.id.fab_action_register_autoescuela);
+        fab.setOnClickListener(v -> goToRegisterAutoescuela());
 
         mapView = findViewById(R.id.autoescuela_list_map_view);
         mapView.onCreate(savedInstanceState);
@@ -155,13 +158,11 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_register_autoescuela){
-            Intent intent = new Intent(this, RegisterAutoescuelaView.class);
-            startActivity(intent);
+            goToRegisterAutoescuela();
             return  true;
         }
         if (item.getItemId() == R.id.action_coche_list){
-            Intent intent = new Intent(this, CocheListView.class);
-            startActivity(intent);
+            goToCocheList();
             return true;
         }
         return false;
@@ -190,4 +191,15 @@ public class AutoescuelaListView extends AppCompatActivity implements Autoescuel
     @Override protected void onStop() { mapView.onStop(); super.onStop(); }
     @Override protected void onDestroy() { mapView.onDestroy(); super.onDestroy(); }
     @Override public void onLowMemory() { super.onLowMemory(); mapView.onLowMemory(); }
+
+    private void goToRegisterAutoescuela() {
+        Intent intent = new Intent(this, RegisterAutoescuelaView.class);
+        startActivity(intent);
+    }
+
+    private void goToCocheList() {
+        Intent intent = new Intent(this, CocheListView.class);
+        startActivity(intent);
+    }
+
 }
