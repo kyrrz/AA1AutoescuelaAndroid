@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aa1autoescuelaandroid.R;
 import com.example.aa1autoescuelaandroid.adapter.CocheAdapter;
 import com.example.aa1autoescuelaandroid.contract.CocheListContract;
+import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
 import com.example.aa1autoescuelaandroid.presenter.CocheListPresenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
         setContentView(R.layout.activity_coche_list);
         presenter = new CocheListPresenter(this);
         cocheList = new ArrayList<>();
+
+        FloatingActionButton fab = findViewById(R.id.fab_action_register_coche);
+        fab.setOnClickListener(v -> goToRegisterCoche());
 
         RecyclerView cochesListView = findViewById(R.id.coche_list);
         cochesListView.setHasFixedSize(true);
@@ -109,16 +114,26 @@ public class CocheListView extends AppCompatActivity implements CocheListContrac
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_register_coche){
-            Intent intent = new Intent(this, RegisterCocheView.class);
-            startActivity(intent);
+            goToRegisterCoche();
             return  true;
         }
         if (item.getItemId() == R.id.back_button){
-            Intent intent = new Intent(this, AutoescuelaListView.class);
-            startActivity(intent);
+            goToAutoescuelaList();
             return  true;
         }
         return false;
     }
+
+    private void goToRegisterCoche() {
+        Intent intent = new Intent(this, RegisterCocheView.class);
+        startActivity(intent);
+    }
+
+    private void goToAutoescuelaList() {
+        Intent intent = new Intent(this, AutoescuelaListView.class);
+        startActivity(intent);
+    }
+
+
 
 }

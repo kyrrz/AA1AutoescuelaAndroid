@@ -4,10 +4,12 @@ package com.example.aa1autoescuelaandroid.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ import java.time.LocalDate;
 public class DetailCocheView extends AppCompatActivity implements DetailCocheContract.View {
     private TextView matricula, marca ,modelo, tipoCambio, kilometraje, fechaCompra, precioCompra, autoescuela;
     private CheckBox disponible;
+    private ImageView imagen;
     private Coche coche;
     private Autoescuela autescuela;
     private DetailCochePresenter presenter;
@@ -53,6 +56,7 @@ public class DetailCocheView extends AppCompatActivity implements DetailCocheCon
         precioCompra = findViewById(R.id.coche_detail_precio_compra);
         disponible = findViewById(R.id.coche_detail_disponible);
         autoescuela = findViewById(R.id.coche_detail_autoescuela);
+        imagen = findViewById(R.id.coche_detail_image);
 
         long id = getIntent().getLongExtra(EXTRA_ID, -1);
         presenter = new DetailCochePresenter(this);
@@ -81,6 +85,10 @@ public class DetailCocheView extends AppCompatActivity implements DetailCocheCon
             );
         } else {
             autoescuela.setText("Autoescuela no asignada");
+        }
+        if (c.getImage() != null && !c.getImage().isEmpty()) {
+            Uri imageUri = Uri.parse(c.getImage());
+            imagen.setImageURI(imageUri);
         }
 
     }

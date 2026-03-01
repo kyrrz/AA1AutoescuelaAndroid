@@ -15,7 +15,7 @@ public class DetailCocheModel implements DetailCocheContract.Model {
     public void loadCoche(long id, OnLoadListener listener) {
         AutoescuelaApiInterface autoescuelaApi = AutoescuelaApi.buildInstance();
         Call<Coche> getCocheCall = autoescuelaApi.getCoche(id);
-        getCocheCall.enqueue(new Callback<Coche>() {
+        getCocheCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Coche> call, Response<Coche> response) {
                 if (response.code() == 200){

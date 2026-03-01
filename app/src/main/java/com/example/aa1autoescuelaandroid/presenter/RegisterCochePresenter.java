@@ -3,7 +3,6 @@ package com.example.aa1autoescuelaandroid.presenter;
 import android.content.Context;
 import android.net.Uri;
 
-import com.example.aa1autoescuelaandroid.contract.RegisterAutoescuelaContract;
 import com.example.aa1autoescuelaandroid.contract.RegisterCocheContract;
 import com.example.aa1autoescuelaandroid.domain.Autoescuela;
 import com.example.aa1autoescuelaandroid.domain.Coche;
