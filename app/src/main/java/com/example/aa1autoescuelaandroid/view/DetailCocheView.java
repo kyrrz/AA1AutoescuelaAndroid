@@ -113,6 +113,7 @@ public class DetailCocheView extends AppCompatActivity implements DetailCocheCon
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_edit_coche){
             Intent intent = new Intent(this, ModifyCocheView.class);
+            intent.putExtra("COCHE_ID", coche.getId());
             startActivity(intent);
             return  true;
         }
